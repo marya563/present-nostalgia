@@ -1,0 +1,1 @@
+int collision_Parfaite(SDL_Surface *calque, SDL_Surface *perso, SDL_Rect posperso, float decalage, float direction);
