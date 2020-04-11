@@ -1,0 +1,14 @@
+#include "defs.h"
+
+/*structure pour gerer l'enigme*/
+typedef struct 
+{
+ SDL_Surface * img; 
+ SDL_Rect 	p; 
+}enigme;
+
+void init_enigme(enigme * e) ;
+void  generate_afficher () ;
+ int solution () ;
+int resolution ();
+void afficher_resultat () ;
