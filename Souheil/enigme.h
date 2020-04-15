@@ -35,6 +35,9 @@ struct Enigme{
 
 typedef struct Enigme enigme;
 
+int findIndex(char string[], char x);
+
+void erase(char string[], int pos);
 
 int riddle(enigme e, hero player, SDL_Surface *screen);
 /*
@@ -43,11 +46,7 @@ int riddle(enigme e, hero player, SDL_Surface *screen);
 		return -1 if the player did not play
 */
 
-
-
 enigme fetchQuestion(char file_q[], char file_a[]);
-
-
 
 
 int getSelection(enigme e, int *answer_selected);
