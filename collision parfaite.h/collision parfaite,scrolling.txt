@@ -1,0 +1,17 @@
+int collision_Parfaite(SDL_Surface *calque, SDL_Surface *perso, SDL_Rect posperso, float decalage, float direction);
+//scrolling
+/ Structure pour gérer la map à afficher (à compléter plus tard) */
+
+  typedef struct Map
+  {
+
+      SDL_Surface *background, *tileSet;
+SDL_Surface levelCollision;
+
+    / Coordonnées de début, lorsqu'on doit dessiner la map /
+    int startX, startY;
+    / Coordonnées max de fin de la map /
+    int maxX, maxY;
+    / Tableau à double dimension représentant la map de tiles */
+    int tile[MAX_MAP_Y][MAX_MAP_X];
+  } Map;
