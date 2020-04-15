@@ -50,12 +50,6 @@ enigme fetchQuestion(char file_q[], char file_a[]);
 
 
 
-enigme createQustion();
-
-
-
-
-
 int getSelection(enigme e, int *answer_selected);
 /*
 		return -1 if the player wants to quit
