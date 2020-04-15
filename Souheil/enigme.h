@@ -1,3 +1,7 @@
+#include <string.h>
+#include <SDL/SDL.h>
+#include <time.h>
+
 struct Enigme{
 	char question[256];
 	char answer1[256];
