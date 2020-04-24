@@ -1,0 +1,283 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "SDL/SDL.h"
+#include "SDL/SDL_image.h"
+#include "SDL/SDL_ttf.h"
+#include "SDL/SDL_mixer.h"
+int main(){
+
+SDL_Surface *screen=NULL;
+SDL_Surface *start=NULL,*settings=NULL,*credits=NULL,*quit=NULL,*volume1=NULL,*volume2=NULL,*fs=NULL,*sousmenu=NULL;
+SDL_Surface* menu[4];
+SDL_Rect position,startpos,settingspos,creditspos,quitpos,volume1pos,volume2pos,sousmenupos;
+int menu_inc=0;
+int i=1;
+SDL_Event event;
+Mix_Music *music;
+Mix_Chunk *clickmusic;
+SDL_Rect camera;
+camera.x=0;
+camera.y=0;
+screen=SDL_SetVideoMode(711,400,32,SDL_HWSURFACE);
+SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,0,255,0));
+SDL_Flip(screen);
+
+    int continuer = 1,continuer1,a=1;
+
+    int x,y;
+ //Initialisation Positions
+        position.x=0;
+ 	position.y=0;
+	startpos.x=104;
+	startpos.y=100;
+	settingspos.x=104;
+	settingspos.y=148;
+	creditspos.x=104;
+	creditspos.y=198;
+	quitpos.x=104;
+	quitpos.y=242;
+        volume1pos.x=94;
+        volume1pos.y=127;
+        volume2pos.x=484;
+        volume2pos.y=127;
+        sousmenupos.x=0;
+        sousmenupos.y=0;
+
+
+
+  // Load Images (Menu,buttons)
+    menu[0]=IMG_Load("menu1.jpg");
+    menu[1]=IMG_Load("menu2.jpg");
+    menu[2]=IMG_Load("menu3.jpg");
+    menu[3]=IMG_Load("menu4.jpg");
+    start=IMG_Load("star1.png");
+    settings=IMG_Load("settings1.png");
+    credits=IMG_Load("credits1.png");
+    quit=IMG_Load("quit1.png");
+    sousmenu=IMG_Load("sousmenu.png");
+
+   SDL_BlitSurface(menu[menu_inc],NULL,screen,&position); // Initialisation Menu Background
+   SDL_BlitSurface(start,NULL,screen,&startpos);     // Initialisation Button Play
+   SDL_BlitSurface(settings,NULL,screen,&settingspos);  // Initialisation Button Settings
+   SDL_BlitSurface(credits,NULL,screen,&creditspos);     // Initialisation Button Credits
+   SDL_BlitSurface(quit,NULL,screen,&quitpos);   // Initialisation Button Exit
+
+  // Music Background
+
+	if(Mix_OpenAudio(44100,MIX_DEFAULT_FORMAT,MIX_DEFAULT_CHANNELS,1024)==-1)
+	    {
+	    printf("%s",Mix_GetError());
+	    }
+
+	    music = Mix_LoadMUS("musicmenu.mp3");
+	    Mix_PlayMusic(music,-1);
+            Mix_VolumeMusic(10);
+	    clickmusic=Mix_LoadWAV("click.wav");
+
+
+
+
+
+	while(continuer)
+	{
+
+                while(SDL_PollEvent(&event))
+                {
+                        switch(event.type)
+                        {
+                                case SDL_QUIT:
+					return(0);
+
+
+                                        break;
+                               // case SDL_MOUSEBUTTONDOWN:
+
+                                case SDL_MOUSEMOTION:
+                                        x= event.motion.x;
+                                        y= event.motion.y;
+
+
+
+					if(x>=startpos.x && x<=startpos.x+startpos.w && y>=startpos.y && y<=startpos.y+startpos.h)
+						{
+
+							start=IMG_Load("start2.png");
+						       if (a==1)
+							Mix_PlayChannel(1,clickmusic,0);
+							a=0;
+
+
+
+						}
+						else
+						{
+							start=IMG_Load("start1.png");
+
+
+
+
+						}
+
+
+					 if(x>=settingspos.x && x<=settingspos.x+settingspos.w && y>=settingspos.y && y<=settingspos.y+settingspos.h)
+						{
+
+							settings=IMG_Load("settings2.png");
+
+							 if (a==1)
+							Mix_PlayChannel(1,clickmusic,0);
+							a=0;
+
+
+
+						}
+						else
+						{
+							settings=IMG_Load("settings1.png");
+
+						}
+					 if(x>=creditspos.x && x<=creditspos.x+creditspos.w && y>=creditspos.y && y<=creditspos.y+creditspos.h)
+						{
+
+							credits=IMG_Load("credits2.png");
+
+							 if (a==1)
+							Mix_PlayChannel(1,clickmusic,0);
+							a=0;
+
+
+
+						}
+						else
+						{
+							credits=IMG_Load("credits1.png");
+
+						}
+	                                      if(x>=quitpos.x && x<=quitpos.x+quitpos.w && y>=quitpos.y && y<=quitpos.y+quitpos.h)
+						{
+
+							quit=IMG_Load("quit2.png");
+
+
+							 if (a==1)
+							Mix_PlayChannel(1,clickmusic,0);
+							a=0;
+
+
+
+						}
+						else
+						{
+							quit=IMG_Load("quit1.png");
+
+						}
+
+					break;
+case SDL_MOUSEBUTTONDOWN:
+        			if ((event.button.button == SDL_BUTTON_LEFT)&&(x>=quitpos.x && x<=quitpos.x+quitpos.w && y>=quitpos.y && y<=quitpos.y+quitpos.h))
+					return(0);
+else if ((event.button.button == SDL_BUTTON_LEFT) && (x < settingspos.x + settingspos.w) && (y > settingspos.y) && (y < settingspos.y + settingspos.h))
+{
+SDL_BlitSurface(sousmenu, NULL, screen,&sousmenupos);
+SDL_BlitSurface(volume1,NULL,screen,&volume1pos);
+SDL_BlitSurface(volume2, NULL, screen,&volume2pos);
+SDL_Flip(screen);
+}
+
+					break;
+
+				case SDL_KEYDOWN: 
+                                                    
+switch(event.key.keysym.sym)
+
+            {
+
+            case SDLK_UP:
+                if (i==1)
+                    i=4;
+
+                else
+
+
+                    i--;
+                break;
+
+            case SDLK_DOWN:
+
+                if(i==4)
+                    i=1;
+
+                else
+
+
+
+                    i++;
+                break;
+
+            }
+
+
+ if (i==1)
+{
+start=IMG_Load("start2.png");
+settings=IMG_Load("settings1.png");
+credits=IMG_Load("credits1.png");
+quit=IMG_Load("quit1.png");
+}
+if (i==2)
+{
+start=IMG_Load("start1.png");
+settings=IMG_Load("settings2.png");
+credits=IMG_Load("credits1.png");
+quit=IMG_Load("quit1.png");
+}
+if  (i==3)
+{
+start=IMG_Load("start1.png");
+settings=IMG_Load("settings1.png");                                                                        
+credits=IMG_Load("credits2.png");
+quit=IMG_Load("quit1.png");
+}
+ if (i==4)
+ {
+start=IMG_Load("start1.png");
+settings=IMG_Load("settings1.png"); 
+credits=IMG_Load("credits1.png");                                                                      
+quit=IMG_Load("quit2.png");
+ }
+
+
+									
+
+
+
+
+
+
+
+
+
+}
+}
+
+
+            // Blit
+		   SDL_FillRect(screen,NULL,SDL_MapRGB(screen->format,255,255,255));
+		   SDL_BlitSurface(menu[menu_inc/10],NULL,screen,&position);
+		   SDL_BlitSurface(start,NULL,screen,&startpos);
+		   SDL_BlitSurface(settings,NULL,screen,&settingspos);
+		   SDL_BlitSurface(credits,NULL,screen,&creditspos);
+		   SDL_BlitSurface(quit,NULL,screen,&quitpos);
+                   SDL_Flip(screen);
+
+
+		   SDL_Flip(screen);
+		menu_inc++;
+		if (menu_inc > 39) menu_inc=0;
+		if (!((x>=startpos.x && x<=startpos.x+startpos.w && y>=startpos.y && y<=startpos.y+startpos.h)||(x>=settingspos.x && x<=settingspos.x+settingspos.w && y>=settingspos.y && y<=settingspos.y+settingspos.h)||(x>=creditspos.x && x<=creditspos.x+creditspos.w && y>=creditspos.y && y<=creditspos.y+creditspos.h)||(x>=quitpos.x && x<=quitpos.x+quitpos.w && y>=quitpos.y && y<=quitpos.y+quitpos.h)))
+
+	 a=1;
+
+
+ }}
+	
